@@ -180,6 +180,8 @@ status enum("Pending", "Shipped", "Delivered") default "Pending",
 foreign key (user_id) references users(id)
 );
 
+
+
 users:
 insert into users (name, email, password)  values
 ("Hoang Gia Bao", "bao@ut.edu.vn", "baostupid"),
