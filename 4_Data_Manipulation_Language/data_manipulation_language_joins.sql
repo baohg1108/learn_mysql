@@ -42,6 +42,79 @@ status enum("Pending", "Shipped", "Delivered") default "Pending",
 foreign key (user_id) references users(id)
 );
 
+
+/*Bài tập Left join*/
+-- 1. Liệt kê tất cả người dùng và địa chỉ (nếu có).
+select u.id, u.name, a.street, a.city, a.country
+from users u
+left join addresses a on u.id=a.user_id;
+
+-- 2. Liệt kê tất cả người dùng và đơn hàng (nếu có).
+select u.id, u.name, o.status, o.order_date
+from users u
+left join orders o on u.id=o.user_id;
+
+-- 3. Liệt kê tất cả sản phẩm và tên danh mục (nếu có).
+select p.id, p.name, c.name as category_name
+from products p
+left join categories c on p.category_id=c.id;
+
+-- 4. Tìm người dùng chưa có địa chỉ.
+select u.id, u.name, a.street, a.city, a.country
+from users u
+left join addresses a on u.id=a.user_id
+where a.id is null;
+-- ở đây lấy .id vif id là khóa chính và nó không bao giờ null. .street hay .city vẫn ok nếu trong create table có trường not null;
+
+-- 5. Tìm người dùng chưa có đơn hàng.
+select u.id, u.name
+from users u
+left join orders o on u;
+
+-- 6. Tìm sản phẩm không thuộc danh mục nào.
+select p.id, p.name
+from products p
+left join categories c on p.category_id=c.id
+where c.id is null;
+
+-- 7. Hiển thị người dùng và tất cả đơn hàng của họ (kể cả khi chưa có đơn).
+select u.id, u.name, o.id as order_id, o.status
+from users u
+left join orders o on u.id=o.user_id;
+
+-- 8. Hiển thị đơn hàng và địa chỉ giao hàng của người đặt (nếu có).
+select o.id, o.status, a.street, a.city
+from orders o
+left join addresses a on o.user_id=a.user_id;
+
+
+-- 9. Liệt kê tất cả địa chỉ và thông tin người dùng (nếu có).
+select a.street, a.city, a.country, u.id, u.name, u.email
+from addresses a
+left join users u on a.user_id=u.id;
+
+-- 10. Liệt kê tất cả danh mục và sản phẩm (nếu có).
+select c.id, c.name, p.id as product_id, p.name
+from categories c 
+left join products p on c.id=p.category_id;
+
+
+-- 11. Tìm danh mục chưa có sản phẩm nào.
+select c.id, c.name
+from categories c
+left join products p on c.id=p.category_id
+where p.id is null;
+
+-- 12. Liệt kê sản phẩm cùng với địa chỉ người tạo (nếu có)
+select p.id as product_id, p.name as product_name , u.id as user_id, u.name as user_name, a.street, a.city
+from products p
+left join users u on p.user_id=u.id
+left join addresses a on u.id=a.user_id;
+
+
+
+
+
 /* Bài tập INNER JOIN (Thực tế)
 INNER JOIN chỉ trả về các bản ghi có liên kết ở cả hai bảng.*/
 
