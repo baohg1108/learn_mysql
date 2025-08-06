@@ -42,6 +42,7 @@ status enum("Pending", "Shipped", "Delivered") default "Pending",
 foreign key (user_id) references users(id)
 );
 
+
 /*Bài tập Left join*/
 -- 1. Liệt kê tất cả người dùng và địa chỉ (nếu có).
 select u.id, u.name, a.street, a.city, a.country
@@ -109,8 +110,6 @@ select p.id as product_id, p.name as product_name , u.id as user_id, u.name as u
 from products p
 left join users u on p.user_id=u.id
 left join addresses a on u.id=a.user_id;
-
-
 
 
 
