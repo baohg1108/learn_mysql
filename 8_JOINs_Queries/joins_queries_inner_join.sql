@@ -369,4 +369,17 @@ inner join addresses a on a.user_id=u.id
 inner join orders o on o.user_id=u.id
 where a.city = "Ho Chi Minh" and o.order_date > "2023-01-01";
 
+-- 48.
+-- 49. Đếm số người dùng đã có đơn hàng ở mỗi thành phố.
+select a.city, count(distinct u.id) as user_count
+from addresses a
+inner join users u on u.id=a.user_id
+group by a.city;
+
+-- 50. Liệt kê tất cả các cặp sản phẩm (name, name) thuộc cùng một danh mục.
+select p1.name as products1, p2.name as products2
+from products p1
+inner join products p2 on p1.category_id=p2.category_id
+and p1.id < p2.id;
+
 
